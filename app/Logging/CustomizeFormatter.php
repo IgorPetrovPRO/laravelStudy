@@ -14,7 +14,7 @@ class CustomizeFormatter
     {
         foreach ($logger->getHandlers() as $handler) {
             $handler->setFormatter(new LineFormatter(
-                "[%datetime%] %channel%\n%level_name%:\n%message%\n%context%\n%extra%"
+                "[%datetime%]\n%level_name%:\n%message%\n%context%\n%extra%"
             ));
         }
     }

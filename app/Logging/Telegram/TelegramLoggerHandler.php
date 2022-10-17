@@ -3,6 +3,7 @@
 namespace App\Logging\Telegram;
 
 use App\Services\Telegram\TelegramBotApi;
+use Exception;
 use Monolog\Handler\AbstractProcessingHandler;
 use Monolog\Logger;
 use Monolog\Formatter\LineFormatter;
@@ -24,6 +25,7 @@ final class TelegramLoggerHandler extends AbstractProcessingHandler
 
     protected function write(array $record): void
     {
+        //
         TelegramBotApi::sendMessage($this->token, $this->chatId, $record['formatted']);
     }
 

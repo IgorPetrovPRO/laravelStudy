@@ -126,7 +126,7 @@ return [
             'level' => env('LOG_LEVEL', 'debug'),
             'chat_id' => env('TG_BOG_CHAT_ID'),
             'token' => env('TG_BOT_KEY'),
-            'tap' => [App\Logging\CustomizeFormatter::class],
+            'tap' => [\App\Logging\CustomizeFormatter::class],
         ],
     ],
 
