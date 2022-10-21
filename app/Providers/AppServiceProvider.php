@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Faker\FakerImageProvider;
 use App\Http\Kernel;
 use Carbon\CarbonInterval;
 use Faker\Factory;
@@ -34,24 +35,33 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Model::preventLazyLoading(!app()->isProduction());
-        Model::preventSilentlyDiscardingAttributes(!app()->isProduction());
-        DB::whenQueryingForLongerThan(500, function (Connection $connection) {
-            logger()
-                ->channel('telegram')
-                ->debug('whenQueryingForLongerThan:' . $connection->query()->toSql());
-        });
+        Model::shouldBeStrict(!app()->isProduction());
 
-        //TODO 3rd lesson request lesson
-        $kernel = app(Kernel::class);
-        $kernel->whenRequestLifecycleIsLongerThan(
-            CarbonInterval::second(4),
-            function (){
+        if(app()->isProduction()){
+            DB::whenQueryingForLongerThan(500, function (Connection $connection) {
                 logger()
                     ->channel('telegram')
-                    ->debug('whenRequestLifecycleIsLongerThan:' . request()->url());
-            }
-        );
+                    ->debug('whenQueryingForLongerThan:' . $connection->totalQueryDuration());
+            });
 
+            DB::listen(function ($query){
+                //dump($query->sql);
+                if($query->time > 500){
+                    logger()
+                        ->channel('telegram')
+                        ->debug('whenQueryingForLongerThan:' . $query->sql, $query->bindings);
+                }
+            });
+
+            $kernel = app(Kernel::class);
+            $kernel->whenRequestLifecycleIsLongerThan(
+                CarbonInterval::second(4),
+                function (){
+                    logger()
+                        ->channel('telegram')
+                        ->debug('whenRequestLifecycleIsLongerThan:' . request()->url());
+                }
+            );
+        }
     }
 }

@@ -15,5 +15,4 @@ final class TelegramBotApi
             'text' => $text,
         ]);
     }
-
 }
