@@ -20,9 +20,16 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         return [
+            //'title' => 'test',
             'title' => $this->faker->words(2,true),
             'brand_id' => Brand::query()->inRandomOrder()->value('id'),
-            'thumbnail' => $this->faker->loremfrickr('img/products'),
+            'thumbnail' => $this->faker->fileLocal('tests/Fixtures/images/products/','images/products/'),
+//            'thumbnail' => $this->faker->file(
+//                base_path('/tests/Fixtures/images/products'),
+//                storage_path('app/public/images/products/'),
+//                false
+//            ),
+            //'thumbnail' => $this->faker->loremfrickr('img/products'),
             'price' => $this->faker->numberBetween(500,100000),
         ];
     }

@@ -10,7 +10,7 @@ use Monolog\Formatter\LineFormatter;
 
 final class TelegramLoggerHandler extends AbstractProcessingHandler
 {
-    protected $chatId;
+    protected int $chatId;
     protected string $token;
     protected string $text;
 
@@ -18,7 +18,7 @@ final class TelegramLoggerHandler extends AbstractProcessingHandler
     {
         $level = Logger::toMonologLevel($config['level']);
         parent::__construct($level);
-        $this->chatId = $config['chat_id'];
+        $this->chatId = (int) $config['chat_id'];
         $this->token = $config['token'];
     }
 
