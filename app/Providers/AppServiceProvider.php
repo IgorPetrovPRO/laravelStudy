@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Faker\FakerImageLocalProvider;
 use App\Faker\FakerImageProvider;
 use App\Http\Kernel;
 use Carbon\CarbonInterval;
@@ -19,13 +20,15 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
         $this->app->singleton(Generator::class,function (){
             $faker = Factory::create();
             $faker->addProvider(new FakerImageProvider($faker));
+            $faker->addProvider(new FakerImageLocalProvider($faker));
             return $faker;
         });
+
     }
 
     /**
@@ -33,7 +36,7 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         Model::shouldBeStrict(!app()->isProduction());
 
