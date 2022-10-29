@@ -2,16 +2,12 @@
 
 namespace App\Providers;
 
-use App\Faker\FakerImageLocalProvider;
-use App\Faker\FakerImageProvider;
 use App\Http\Kernel;
 use Carbon\CarbonInterval;
-use Faker\Factory;
-use Faker\Generator;
-use Illuminate\Database\Connection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Validation\Rules\Password;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,12 +18,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->singleton(Generator::class,function (){
-            $faker = Factory::create();
-            $faker->addProvider(new FakerImageProvider($faker));
-            $faker->addProvider(new FakerImageLocalProvider($faker));
-            return $faker;
-        });
 
     }
 
@@ -60,5 +50,9 @@ class AppServiceProvider extends ServiceProvider
                 }
             );
         }
+
+        Password::defaults(function (){
+            return Password::min(8);
+        });
     }
 }
