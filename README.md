@@ -10,4 +10,13 @@
 - npm sass
 - npm i autoprefixer postcss
 
+
+OR
+
+- composer install
+- php artisan shop:install
+
+AND
+
+- make .env and env.testing from env.example
 # Deploy
