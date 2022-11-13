@@ -2,10 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Models\Brand;
 use App\Models\Product;
+use Domain\Catalog\Models\Brand;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\Storage;
 
 /**
  * @extends Factory<Product>
@@ -29,7 +28,7 @@ class ProductFactory extends Factory
 //                false
 //            ),
             //'thumbnail' => $this->faker->loremfrickr('img/products'),
-            'price' => $this->faker->numberBetween(500,100000),
+            'price' => $this->faker->numberBetween(50000,10000000),
             'on_home_page' => $this->faker->boolean(),
             'sorting' => $this->faker->numberBetween(1, 999)
         ];

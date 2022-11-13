@@ -13,7 +13,7 @@ use Throwable;
 class SocialAuthController extends Controller
 {
 
-    protected $driver = 'github';
+    protected string $driver = 'github';
 
 
     public function redirect(string $driver) : RedirectResponse

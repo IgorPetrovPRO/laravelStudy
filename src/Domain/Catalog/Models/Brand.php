@@ -1,14 +1,20 @@
 <?php
 
-namespace App\Models;
+namespace Domain\Catalog\Models;
 
-use App\Traits\Models\HasSlug;
-use App\Traits\Models\HasThumbnail;
+use App\Models\Product;
+use Database\Factories\BrandFactory;
+use Domain\Catalog\QueryBuilders\BrandQueryBuilder;
 use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Support\Traits\Models\HasSlug;
+use Support\Traits\Models\HasThumbnail;
 
+/**
+ * @method static Brand| BrandQueryBuilder query()
+ */
 class Brand extends Model
 {
     use HasFactory;
@@ -23,11 +29,9 @@ class Brand extends Model
         'sorting'
     ];
 
-    public function scopeHomePage(Builder $query)
+    public function newEloquentBuilder($query)
     {
-        $query->where('on_home_page',true)
-            ->orderBy('sorting')
-            ->limit(6);
+        return new BrandQueryBuilder($query);
     }
 
     public function products(): HasMany
@@ -39,4 +43,9 @@ class Brand extends Model
     {
         return 'brands';
     }
+
+//    protected static function newFactory()
+//    {
+//        return BrandFactory::new();
+//    }
 }

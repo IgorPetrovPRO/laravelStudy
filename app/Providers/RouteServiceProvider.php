@@ -3,13 +3,13 @@
 namespace App\Providers;
 
 
+use App\Contracts\RouteRegistrat;
 use App\Routing\AppRegistar;
-use Domain\Auth\Routing\AuthRegistar;
+use App\Routing\AuthRegistar;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Contracts\Routing\Registrar;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
-use App\Contracts\RouteRegistrat;
 use Illuminate\Support\Facades\RateLimiter;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\Response;

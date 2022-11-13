@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Traits\Models;
+namespace Support\Traits\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 
 trait HasSlug
 {
